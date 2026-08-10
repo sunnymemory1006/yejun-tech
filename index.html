@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宁波邺君智能科技有限公司 - 智能仓储AGV解决方案</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js">
+    </script>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-white: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-alt: #f1f5f7;
+            --bg-hero: #f0f4ff;
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e1;
+            --border-blue: rgba(37, 99, 235, 0.2);
+            --border-gold: rgba(201, 169, 110, 0.35);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-blue: #2563eb;
+            --accent-blue-light: #3b82f6;
+            --accent-blue-bright: #60a5fa;
+            --accent-cyan: #06b6d4;
+            --accent-cyan-light: #22d3ee;
+            --accent-gold: #c9a96e;
+            --accent-gold-dark: #b8944f;
+            --accent-amber: #f59e0b;
+            --gradient-blue: linear-gradient(135deg, #2563eb 0%, #3b82f6 40%, #60a5fa 100%);
+            --gradient-cyan: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
+            --gradient-gold: linear-gradient(135deg, #c9a96e 0%, #e0c78a 30%, #b8944f 60%, #d4b87a 100%);
+            --gradient-hero: linear-gradient(160deg, #f0f4ff 0%, #e8f0fe 25%, #f8fafc 50%, #fefefe 100%);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.09), 0 8px 20px rgba(0, 0, 0, 0.05);
+            --shadow-blue: 0 8px 28px rgba(37, 99, 235, 0.12), 0 2px 8px rgba(37, 99, 235, 0.06);
+            --shadow-gold: 0 8px 28px rgba(201, 169, 110, 0.15), 0 2px 8px rgba(201, 169, 110, 0.08);
+            --shadow-cyan: 0 8px 28px rgba(6, 182, 212, 0.12), 0 2px 8px rgba(6, 182, 212, 0.06);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --radius-full: 9999px;
+            --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition-fast: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-smooth: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #f5f7fb;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.55;
+            background-image:
+                radial-gradient(circle at 5% 15%, rgba(37, 99, 235, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 92% 8%, rgba(6, 182, 212, 0.06) 0%, transparent 38%),
+                radial-gradient(circle at 88% 42%, rgba(37, 99, 235, 0.05) 0%, transparent 42%),
+                radial-gradient(circle at 15% 55%, rgba(6, 182, 212, 0.04) 0%, transparent 35%),
+                radial-gradient(circle at 55% 78%, rgba(201, 169, 110, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 75% 90%, rgba(37, 99, 235, 0.04) 0%, transparent 38%),
+                radial-gradient(circle at 30% 92%, rgba(6, 182, 212, 0.03) 0%, transparent 35%),
+                radial-gradient(circle at 60% 25%, rgba(139, 92, 246, 0.03) 0%, transparent 36%);
+            animation: bg-shift 28s ease-in-out infinite;
+        }
+
+        @keyframes bg-shift {
+
+            0%,
+            100% {
+                opacity: 0.55;
+                transform: scale(1) translate(0, 0);
+            }
+
+            25% {
+                opacity: 0.48;
+                transform: scale(1.03) translate(8px, -6px);
+            }
+
+            50% {
+                opacity: 0.58;
+                transform: scale(0.98) translate(-5px, 8px);
+            }
+
+            75% {
+                opacity: 0.5;
+                transform: scale(1.02) translate(3px, -4px);
+            }
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.28;
+            background-image:
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 72%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 72%);
+        }
+
+        .grid-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 14px 14px;
+            mask-image: radial-gradient(ellipse at 60% 55%, black 18%, transparent 65%);
+            -webkit-mask-image: radial-gradient(ellipse at 60% 55%, black 18%, transparent 65%);
+        }
+
+        #app {
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 2rem;
+            transition: var(--transition-smooth);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+            height: 64px;
+        }
+
+        .navbar-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-logo .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--gradient-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 900;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            position: relative;
+            letter-spacing: 0.02em;
+            padding: 6px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--gradient-blue);
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: var(--radius-full);
+            font-weight: 600 !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 0.03em;
+            transition: var(--transition-bounce) !important;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(37, 99, 235, 0.3);
+            color: #fff !important;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--text-primary);
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: var(--transition-smooth);
+        }
+
+        .section {
+            padding: 100px 2rem;
+            position: relative;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 0.75rem;
+            padding: 5px 16px;
+            border: 1px solid var(--border-blue);
+            border-radius: var(--radius-full);
+            background: rgba(37, 99, 235, 0.04);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .text-blue {
+            color: var(--accent-blue);
+        }
+
+        .text-cyan {
+            color: var(--accent-cyan);
+        }
+
+        .text-gold {
+            color: var(--accent-gold-dark);
+        }
+
+        .highlight-blue {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .highlight-cyan {
+            background: var(--gradient-cyan);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 130px 2rem 80px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(37, 99, 235, 0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 60%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(201, 169, 110, 0.04) 0%, transparent 45%),
+                radial-gradient(ellipse at 85% 15%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
+                linear-gradient(170deg, #f2f6ff 0%, #eaf1fd 20%, #f7f8fb 45%, #fefefe 70%, #fafcff 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -80px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            animation: hero-float-1 12s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -60px;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+            animation: hero-float-2 14s ease-in-out infinite;
+        }
+
+        .hero .hero-geo-extra {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero .hero-geo-1 {
+            top: 18%;
+            left: 8%;
+            width: 180px;
+            height: 180px;
+            border: 1.5px solid rgba(37, 99, 235, 0.08);
+            border-radius: 30% 70% 50% 50% / 40% 50% 50% 60%;
+            animation: hero-morph 10s ease-in-out infinite;
+        }
+
+        .hero .hero-geo-2 {
+            bottom: 22%;
+            right: 10%;
+            width: 140px;
+            height: 140px;
+            border: 1.5px solid rgba(6, 182, 212, 0.1);
+            border-radius: 60% 40% 40% 60% / 50% 40% 60% 50%;
+            animation: hero-morph 13s ease-in-out infinite reverse;
+        }
+
+        .hero .hero-dots {
+            position: absolute;
+            top: 28%;
+            right: 15%;
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+            background-image: radial-gradient(rgba(37, 99, 235, 0.2) 2px, transparent 2px);
+            background-size: 20px 20px;
+            animation: hero-float-1 16s ease-in-out infinite;
+        }
+
+        @keyframes hero-float-1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(18px, -20px) scale(1.06);
+            }
+
+            66% {
+                transform: translate(-12px, 14px) scale(0.95);
+            }
+        }
+
+        @keyframes hero-float-2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(-16px, -14px) scale(1.05);
+            }
+
+            66% {
+                transform: translate(20px, 10px) scale(0.94);
+            }
+        }
+
+        @keyframes hero-morph {
+
+            0%,
+            100% {
+                border-radius: 30% 70% 50% 50% / 40% 50% 50% 60%;
+            }
+
+            25% {
+                border-radius: 55% 45% 40% 60% / 50% 40% 60% 50%;
+            }
+
+            50% {
+                border-radius: 45% 55% 60% 40% / 60% 50% 45% 55%;
+            }
+
+            75% {
+                border-radius: 60% 40% 45% 55% / 40% 60% 55% 45%;
+            }
+        }
+
+        .hero-inner {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(37, 99, 235, 0.06);
+            border: 1px solid var(--border-blue);
+            padding: 7px 18px;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.5);
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 16px rgba(6, 182, 212, 0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            animation: fadeInUp 0.7s ease-out 0.1s both;
+            color: var(--text-primary);
+        }
+
+        .hero-title .highlight {
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.7s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.7s ease-out 0.3s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 30px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.02em;
+            transition: var(--transition-bounce);
+            font-family: var(--font-sans);
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--accent-blue);
+            border: 1.5px solid var(--border-blue);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-blue);
+            background: rgba(37, 99, 235, 0.03);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(201, 169, 110, 0.25);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(201, 169, 110, 0.35);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            animation: bounce-down 2s infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .scroll-indicator .mouse {
+            width: 24px;
+            height: 38px;
+            border: 2px solid var(--text-muted);
+            border-radius: 14px;
+            position: relative;
+        }
+
+        .scroll-indicator .mouse::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 8px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            animation: scroll-wheel 2s infinite;
+        }
+
+        @keyframes scroll-wheel {
+            0% {
+                opacity: 1;
+                top: 8px;
+            }
+
+            100% {
+                opacity: 0;
+                top: 22px;
+            }
+        }
+
+        @keyframes bounce-down {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(8px);
+            }
+        }
+
+        .org-section {
+            background:
+                radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(6, 182, 212, 0.03) 0%, transparent 45%),
+                #ffffff;
+            position: relative;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .org-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+            background-image: radial-gradient(rgba(37, 99, 235, 0.08) 1.2px, transparent 1.2px);
+            background-size: 32px 32px;
+            mask-image: radial-gradient(ellipse at 50% 50%, black 25%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 25%, transparent 70%);
+        }
+
+        .org-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .org-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .org-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-blue);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 0 0 2px 2px;
+        }
+
+        .org-card:hover {
+            border-color: var(--border-blue);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .org-card:hover::before {
+            opacity: 1;
+        }
+
+        .org-card-avatar {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .org-card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .avatar-founder {
+            background: var(--gradient-blue);
+            color: #fff;
+        }
+
+        .avatar-cto {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: #fff;
+        }
+
+        .avatar-team {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #fff;
+        }
+
+        .org-card .org-role {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 0.3rem;
+        }
+
+        .org-card .org-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text-primary);
+        }
+
+        .org-card .org-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .org-card .org-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 1rem;
+        }
+
+        .org-tag {
+            font-size: 0.72rem;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            letter-spacing: 0.03em;
+            font-weight: 500;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .overview-visual {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overview-visual-inner {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .overview-visual-inner .big-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-16px);
+            }
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .overview-stat {
+            text-align: center;
+            padding: 1.2rem;
+            background: var(--bg-card-alt);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-fast);
+        }
+
+        .overview-stat:hover {
+            background: #fff;
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-blue);
+        }
+
+        .overview-stat .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .overview-stat .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .overview-text h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .overview-text .feature-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .overview-text .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-list li .check-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(6, 182, 212, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .products-section {
+            background:
+                radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(6, 182, 212, 0.03) 0%, transparent 45%),
+                #f5f7fb;
+            position: relative;
+        }
+
+        .products-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.18;
+            background-image:
+                url("data:image/svg+xml,%3Csvg width='60' height='52' viewBox='0 0 60 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='30,0 60,15 60,37 30,52 0,37 0,15' fill='none' stroke='%232563eb' stroke-width='0.6' stroke-opacity='0.25'/%3E%3C/svg%3E");
+            background-size: 60px 52px;
+            mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            border-color: var(--border-blue);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-card .product-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: rgba(37, 99, 235, 0.06);
+            border: 1px solid var(--border-blue);
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .product-card:hover .product-icon-wrap {
+            background: rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.04);
+        }
+
+        .product-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .product-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .product-card .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 1rem;
+        }
+
+        .product-feature-tag {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            background: rgba(37, 99, 235, 0.05);
+            border: 1px solid var(--border-blue);
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .product-card.featured {
+            border-color: var(--border-gold);
+            box-shadow: var(--shadow-gold);
+            background: linear-gradient(180deg, #fffefb 0%, #ffffff 100%);
+        }
+
+        .product-card.featured .product-icon-wrap {
+            background: rgba(201, 169, 110, 0.1);
+            border-color: var(--border-gold);
+        }
+
+        .product-card.featured .product-feature-tag {
+            background: rgba(201, 169, 110, 0.06);
+            border-color: var(--border-gold);
+            color: var(--accent-gold-dark);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.68rem;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            background: var(--gradient-blue);
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .value-section {
+            background:
+                radial-gradient(circle at 30% 50%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(201, 169, 110, 0.04) 0%, transparent 45%),
+                #ffffff;
+            position: relative;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .value-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.22;
+            background-image: repeating-linear-gradient(90deg,
+                    rgba(37, 99, 235, 0.04) 0px,
+                    rgba(37, 99, 235, 0.04) 1px,
+                    transparent 1px,
+                    transparent 40px);
+            mask-image: radial-gradient(ellipse at 50% 50%, black 28%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 28%, transparent 70%);
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2.2rem 1.5rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .value-card:hover {
+            border-color: var(--border-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .value-card .value-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .value-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .value-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .market-data-bar {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 3rem;
+            padding: 2.5rem 2rem;
+            background: var(--bg-white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f4ff 50%, #f8fafc 100%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .market-data-item {
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+
+        .market-data-item .big-num {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: var(--gradient-cyan);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .market-data-item .num-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            font-weight: 500;
+        }
+
+        .market-data-divider {
+            width: 1px;
+            height: 55px;
+            background: var(--border-light);
+            border-radius: 1px;
+        }
+
+        .partners-section {
+            background:
+                radial-gradient(circle at 40% 30%, rgba(6, 182, 212, 0.04) 0%, transparent 45%),
+                radial-gradient(circle at 70% 70%, rgba(37, 99, 235, 0.04) 0%, transparent 40%),
+                #f5f7fb;
+            position: relative;
+        }
+
+        .partners-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.25;
+            background-image:
+                radial-gradient(rgba(37, 99, 235, 0.12) 2px, transparent 2px),
+                radial-gradient(rgba(6, 182, 212, 0.1) 1.5px, transparent 1.5px);
+            background-size: 50px 50px, 25px 25px;
+            background-position: 0 0, 25px 25px;
+            mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 72%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 72%);
+        }
+
+        .partners-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .partner-card {
+            flex: 0 1 300px;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.8rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .partner-card:hover {
+            border-color: var(--border-blue);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .partner-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .partner-card .partner-icon {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .partner-card h4 {
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .partner-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .cta-section {
+            text-align: center;
+            position: relative;
+            background:
+                radial-gradient(ellipse at 50% 40%, rgba(37, 99, 235, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 70%, rgba(6, 182, 212, 0.04) 0%, transparent 55%),
+                #f8fafc;
+        }
+
+        .cta-card {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border-blue);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-card::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-card h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .cta-card .cta-phone {
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .cta-card .cta-address {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .cta-sub {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 1rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .footer .footer-name {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.96);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1.2rem;
+                border-bottom: 1px solid var(--border-light);
+                box-shadow: var(--shadow-md);
+                z-index: 999;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .market-data-divider {
+                display: none;
+            }
+
+            .market-data-bar {
+                gap: 1.5rem;
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 70px 1.2rem;
+            }
+
+            .hero {
+                padding: 110px 1.2rem 60px;
+                min-height: auto;
+            }
+
+            .org-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .value-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .product-image {
+                height: 200px;
+            }
+
+            .partner-card {
+                flex: 0 1 100%;
+            }
+
+            .hero .hero-geo-1,
+            .hero .hero-geo-2,
+            .hero .hero-dots {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-card .cta-phone {
+                font-size: 1.6rem;
+            }
+
+            .product-image {
+                height: 220px;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-bg"></div>
+    <div id="app">
+        <nav class="navbar" :class="{ scrolled: isScrolled }" ref="navbarRef">
+            <div class="navbar-inner">
+                <a href="#hero" class="nav-logo" @click.prevent="scrollToSection('hero')">
+                    <div class="logo-icon">邺</div>
+                    <span>邺君智能</span>
+                </a>
+                <button class="mobile-menu-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-links" :class="{ open: mobileMenuOpen }">
+                    <li><a href="#org" @click.prevent="scrollToSection('org'); mobileMenuOpen=false">公司架构</a></li>
+                    <li><a href="#overview" @click.prevent="scrollToSection('overview'); mobileMenuOpen=false">公司概况</a>
+                    </li>
+                    <li><a href="#products" @click.prevent="scrollToSection('products'); mobileMenuOpen=false">核心产品</a>
+                    </li>
+                    <li><a href="#value" @click.prevent="scrollToSection('value'); mobileMenuOpen=false">价值前景</a></li>
+                    <li><a href="#partners" @click.prevent="scrollToSection('partners'); mobileMenuOpen=false">合作案例</a>
+                    </li>
+                    <li><a href="#contact" @click.prevent="scrollToSection('contact'); mobileMenuOpen=false"
+                            class="nav-cta">联系我们</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <section class="hero" id="hero">
+            <div class="hero-geo-1 hero-geo-extra"></div>
+            <div class="hero-geo-2 hero-geo-extra"></div>
+            <div class="hero-dots hero-geo-extra"></div>
+            <div class="hero-inner">
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span> 宁波邺君智能科技有限公司
+                </div>
+                <h1 class="hero-title">
+                    智能仓储<span class="highlight">AGV自动化</span><br>解决方案提供商
+                </h1>
+                <p class="hero-desc">
+                    轻量化、可落地、软硬件一体化智能仓储解决方案，聚焦制造业原料仓、成品仓、电商云仓、第三方物流等中小微仓储场景，以自主研发核心系统驱动仓储智能化升级。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn btn-primary" @click.prevent="scrollToSection('products')">
+                        <span>🔍</span> 了解核心产品
+                    </a>
+                    <a href="#contact" class="btn btn-outline" @click.prevent="scrollToSection('contact')">
+                        <span>📞</span> 获取定制方案
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+                <span>向下滚动</span>
+            </div>
+        </section>
+
+        <section class="section org-section" id="org">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <span class="section-label">组织架构</span>
+                    <h2 class="section-title">顶尖团队，<span class="text-blue">技术驱动</span></h2>
+                    <p class="section-subtitle">由浙江大学高层次人才领衔，汇聚智能人机交互与机器人技术领域资深专家，打造国内中高端智能仓储装备一体化解决方案。</p>
+                </div>
+                <div class="org-cards">
+                    <div class="org-card reveal reveal-delay-1">
+                        <div class="org-card-avatar">
+                            <img src="./images/renyejun.jpg" alt="任业军" />
+                        </div>
+                        <div class="org-role">创始人 / 总经理</div>
+                        <div class="org-name">任业军</div>
+                        <div class="org-desc">全面负责公司战略规划与业务运营，深耕智能仓储行业多年，带领团队为客户提供从方案设计到落地实施的全流程服务。</div>
+                        <div class="org-tags">
+                            <span class="org-tag">战略规划</span>
+                            <span class="org-tag">业务运营</span>
+                            <span class="org-tag">客户服务</span>
+                        </div>
+                    </div>
+                    <div class="org-card reveal reveal-delay-1">
+                        <div class="org-card-avatar">
+                            <img src="./images/zenglimin.png" alt="曾丽敏" />
+                        </div>
+                        <div class="org-role">首席技术官 / 股东</div>
+                        <div class="org-name">曾丽敏 副教授</div>
+                        <div class="org-desc">
+                            浙江省高层次引进人才，浙江大学软件学院副教授，CCF人机交互专委会委员，德国德累斯顿工业大学博士，曾获欧盟FP7项目资助。专注智能人机交互与机器人技术研发，产学研成果已应用于阿里巴巴、华为等头部企业。
+                        </div>
+                        <div class="org-tags">
+                            <span class="org-tag">浙江大学</span>
+                            <span class="org-tag">博士/博士后</span>
+                            <span class="org-tag">人机交互专家</span>
+                            <span class="org-tag">40+论文</span>
+                            <span class="org-tag">7项专利</span>
+                            <span class="org-tag">3项软著</span>
+                        </div>
+                    </div>
+                    <div class="org-card reveal reveal-delay-3">
+                        <div class="org-card-avatar avatar-team">🔬</div>
+                        <div class="org-role">核心研发团队</div>
+                        <div class="org-name">浙大背景研发力量</div>
+                        <div class="org-desc">
+                            依托浙江大学软件学院（宁波）科研平台，团队在AGV导航定位、多传感器融合、多机协同调度、人机协同安全、大模型机械臂运动数据生成等领域具备深厚技术积累。</div>
+                        <div class="org-tags">
+                            <span class="org-tag">AGV导航算法</span>
+                            <span class="org-tag">多机调度</span>
+                            <span class="org-tag">AI大模型</span>
+                            <span class="org-tag">产学研合作</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="overview">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <span class="section-label">公司概况</span>
+                    <h2 class="section-title">立足长三角，<span class="text-cyan">服务全中国</span></h2>
+                    <p class="section-subtitle">
+                        浙江军盛智能装备有限公司旗下全资子公司，专注于智能仓储物流装备研发、生产、销售与定制化服务，为制造、电商、冷链、物流等多行业客户提供节能、环保、高效、稳定的智能一体化解决方案。</p>
+                </div>
+                <div class="overview-grid">
+                    <div class="overview-visual reveal reveal-delay-1">
+                        <div class="overview-visual-inner">
+                            <div class="big-icon">🏭</div>
+                            <p style="color:var(--text-secondary);font-weight:600;">智能仓储 · 全场景覆盖</p>
+                            <div class="overview-stats">
+                                <div class="overview-stat">
+                                    <div class="stat-num">95%+</div>
+                                    <div class="stat-label">硬件兼容率</div>
+                                </div>
+                                <div class="overview-stat">
+                                    <div class="stat-num">24/7</div>
+                                    <div class="stat-label">全天候作业</div>
+                                </div>
+                                <div class="overview-stat">
+                                    <div class="stat-num">3+</div>
+                                    <div class="stat-label">软著授权</div>
+                                </div>
+                                <div class="overview-stat">
+                                    <div class="stat-num">7×24h</div>
+                                    <div class="stat-label">远程技术支持</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overview-text reveal reveal-delay-2">
+                        <h3>全系列仓储装备<span class="text-blue">一体化解决方案</span></h3>
+                        <p style="color:var(--text-secondary);line-height:1.7;margin-bottom:1rem;">
+                            公司具备从硬件到软件、从室内到室外、从常温到严寒环境的全场景覆盖能力，自主研发核心调度系统，兼容市面上95%以上仓储硬件，可依据客户行业流程定制化开发。</p>
+                        <ul class="feature-list">
+                            <li><span class="check-icon">✓</span> AGV高精度导航定位与多传感器融合技术</li>
+                            <li><span class="check-icon">✓</span> 多AGV协同调度算法，解决多机拥堵难题</li>
+                            <li><span class="check-icon">✓</span> 仓储车辆安全防护与人机协同技术</li>
+                            <li><span class="check-icon">✓</span> 工业洗地机智能清洁与节能技术</li>
+                            <li><span class="check-icon">✓</span> 轻量化架构设计，运行稳定、易维护</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section products-section" id="products">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <span class="section-label">核心产品</span>
+                    <h2 class="section-title">全品类智能装备，<span class="text-blue">一站式交付</span></h2>
+                    <p class="section-subtitle">覆盖智能仓储全场景，从AGV搬运车到堆垛机、从料箱机器人到无人驾驶观光车，提供交钥匙整体解决方案。</p>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card featured reveal reveal-delay-1">
+                        <span class="product-badge">核心产品</span>
+                        <div class="product-icon-wrap">🤖</div>
+                        <div class="product-image">
+                            <img src="./images/agv-robot.jpg" alt="智能AGV搬运机器人" />
+                        </div>
+                        <h3>智能AGV搬运机器人</h3>
+                        <p>支持二维码导航+SLAM激光导航，具备自动取货、送货、归位及充电功能，可实现24小时连续作业。潜伏式、背负式主流机型可选，多机协同作业，智能避障、拥堵自动绕行。</p>
+                        <div class="product-features">
+                            <span class="product-feature-tag">SLAM导航</span>
+                            <span class="product-feature-tag">多机协同</span>
+                            <span class="product-feature-tag">智能避障</span>
+                            <span class="product-feature-tag">24h作业</span>
+                        </div>
+                    </div>
+                    <div class="product-card reveal reveal-delay-1">
+                        <div class="product-icon-wrap">📦</div>
+                        <div class="product-image">
+                            <img src="./images/material-box-robot.jpg" alt="多层料箱机器人" />
+                        </div>
+                        <h3>多层料箱机器人</h3>
+                        <p>高效多层存取，适配各类料箱规格，大幅提升仓储空间利用率，适合电商云仓、医药仓储等场景。</p>
+                        <div class="product-features">
+                            <span class="product-feature-tag">多层存取</span>
+                            <span class="product-feature-tag">空间优化</span>
+                        </div>
+                    </div>
+                    <div class="product-card reveal reveal-delay-2">
+                        <div class="product-icon-wrap">🔁</div>
+                        <div class="product-image">
+                            <img src="./images/four-way-shuttle.jpg" alt="四向穿梭车与高速堆垛机" />
+                        </div>
+                        <h3>四向穿梭车 & 高速堆垛机</h3>
+                        <p>四向穿梭车灵活调度，高速料箱堆垛机精准高效，配合自动存储立体柜，构建高密度立体仓储系统。</p>
+                        <div class="product-features">
+                            <span class="product-feature-tag">高密度存储</span>
+                            <span class="product-feature-tag">高速堆垛</span>
+                            <span class="product-feature-tag">自动立体柜</span>
+                        </div>
+                    </div>
+                    <div class="product-card reveal reveal-delay-2">
+                        <div class="product-icon-wrap">🏗️</div>
+                        <div class="product-image">
+                            <img src="./images/forklift-tow-tractor.jpg" alt="仓储堆高车与无人牵引车" />
+                        </div>
+                        <h3>仓储堆高车 & 无人牵引车</h3>
+                        <p>仓储堆高搬运车、无人牵引车，适配窄巷道、冷库等特殊环境，从室内到室外全覆盖。</p>
+                        <div class="product-features">
+                            <span class="product-feature-tag">窄巷道</span>
+                            <span class="product-feature-tag">冷库版</span>
+                            <span class="product-feature-tag">室内外一体</span>
+                        </div>
+                    </div>
+                    <div class="product-card reveal reveal-delay-3">
+                        <div class="product-icon-wrap">🚗</div>
+                        <div class="product-image">
+                            <img src="./images/autonomous-sightseeing.jpg" alt="无人驾驶观光车" />
+                        </div>
+                        <h3>无人驾驶观光车</h3>
+                        <p>公司特色产品，将自动驾驶技术应用于园区观光、厂区通勤等场景，展示公司在无人驾驶领域的技术实力。</p>
+                        <div class="product-features">
+                            <span class="product-feature-tag">自动驾驶</span>
+                            <span class="product-feature-tag">园区应用</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section value-section" id="value">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <span class="section-label">价值与前景</span>
+                    <h2 class="section-title">赛道刚需，<span class="text-cyan">万亿市场</span></h2>
+                    <p class="section-subtitle">国家持续推动制造业数字化转型，智能仓储渗透率不足15%，轻量化AGV方案投入低、见效快、风险小，是未来3-5年仓储升级主流趋势。</p>
+                </div>
+                <div class="value-grid">
+                    <div class="value-card reveal reveal-delay-1">
+                        <span class="value-icon">📈</span>
+                        <h3>万亿级市场空间</h3>
+                        <p>全国中小工厂、物流仓库超千万家，智能化渗透率不足15%，市场空间达万亿级别，增长潜力巨大。</p>
+                    </div>
+                    <div class="value-card reveal reveal-delay-1">
+                        <span class="value-icon">🎯</span>
+                        <h3>精准解决核心痛点</h3>
+                        <p>直击人工成本高、效率低、管理难等仓储核心问题，无人化搬运实现降本增效，ROI清晰可观。</p>
+                    </div>
+                    <div class="value-card reveal reveal-delay-2">
+                        <span class="value-icon">⚡</span>
+                        <h3>轻量化快速落地</h3>
+                        <p>投入低、见效快、风险小，标准化产品+定制化适配，快速响应不同行业客户需求，可标准化复制。</p>
+                    </div>
+                    <div class="value-card reveal reveal-delay-2">
+                        <span class="value-icon">🏛️</span>
+                        <h3>政策大力扶持</h3>
+                        <p>国家持续推动智慧物流、智能工厂建设，各地对智能仓储、工业机器人均有补贴扶持，赛道政策利好明确。</p>
+                    </div>
+                </div>
+                <div class="market-data-bar reveal reveal-delay-3">
+                    <div class="market-data-item">
+                        <div class="big-num">1000万+</div>
+                        <div class="num-label">全国中小仓储企业</div>
+                    </div>
+                    <div class="market-data-divider"></div>
+                    <div class="market-data-item">
+                        <div class="big-num">&lt;15%</div>
+                        <div class="num-label">当前智能化渗透率</div>
+                    </div>
+                    <div class="market-data-divider"></div>
+                    <div class="market-data-item">
+                        <div class="big-num">万亿级</div>
+                        <div class="num-label">潜在市场规模</div>
+                    </div>
+                    <div class="market-data-divider"></div>
+                    <div class="market-data-item">
+                        <div class="big-num">3-5年</div>
+                        <div class="num-label">主流升级窗口期</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section partners-section" id="partners">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <span class="section-label">合作案例</span>
+                    <h2 class="section-title">信赖之选，<span class="text-blue">标杆案例</span></h2>
+                    <p class="section-subtitle">已服务多家行业头部企业，以卓越产品力赢得客户信赖。</p>
+                </div>
+                <div class="partners-row">
+                    <div class="partner-card reveal reveal-delay-1">
+                        <div class="partner-icon">🥤</div>
+                        <div class="product-image">
+                            <img src="./images/coca-cola.jpg" alt="中粮可口可乐合作案例" />
+                        </div>
+                        <h4>中粮可口可乐</h4>
+                        <p>酒水饮料行业 · 采用平衡重式FMR解决方案与AGV智能方案，解决搬运难题，实现仓储自动化升级。</p>
+                    </div>
+                    <div class="partner-card reveal reveal-delay-2">
+                        <div class="partner-icon">💊</div>
+                        <div class="product-image">
+                            <img src="./images/pharma-warehouse.jpg" alt="国内药企TOP3旗下子公司合作案例" />
+                        </div>
+                        <h4>国内药企TOP3旗下子公司</h4>
+                        <p>医药行业 · 为济南打造室内外一体化智能搬运项目，采用室外平衡重FMR、窄巷道FMR、冷库版FMR，拓宽医药仓储效率边界。</p>
+                    </div>
+                    <div class="partner-card reveal reveal-delay-3">
+                        <div class="partner-icon">🏪</div>
+                        <div class="product-image">
+                            <img src="./images/haoxianglai-logistics.jpg" alt="江苏泰兴好想来物流配送中心合作案例" />
+                        </div>
+                        <h4>江苏泰兴好想来物流配送中心</h4>
+                        <p>物流配送行业 · 选用仓储搬运车和堆高车解决物流输送，提升配送中心运营效率。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section cta-section" id="contact">
+            <div class="section-inner">
+                <div class="cta-card reveal">
+                    <span class="section-label">联系我们</span>
+                    <h2>让仓储<span class="text-blue">智能化</span>触手可及</h2>
+                    <p style="color:var(--text-secondary);margin-bottom:1.5rem;">无论是产品咨询、方案定制还是技术合作，我们随时为您提供专业服务</p>
+                    <div class="cta-phone">183-5829-3333</div>
+                    <p style="color:var(--text-muted);font-size:0.9rem;">联系人：任先生</p>
+                    <div class="cta-address" style="margin-top:1rem;">
+                        📍 浙江省宁波市鄞州区学士路655号科技信息孵化园
+                    </div>
+                    <div style="margin-top:1.8rem;">
+                        <a href="tel:18358293333" class="btn btn-primary" style="font-size:1rem;padding:16px 40px;">
+                            📞 立即致电咨询
+                        </a>
+                    </div>
+                    <p class="cta-sub">宁波邺君智能科技有限公司</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2026 <span class="footer-name">宁波邺君智能科技有限公司</span> | 浙江军盛智能装备有限公司全资子公司</p>
+            <p style="margin-top:0.3rem;">专注智能仓储物流装备 · AGV自动化解决方案 · 让仓储更智能</p>
+        </footer>
+    </div>
+
+    <script>
+        const {createApp, ref, onMounted, onUnmounted, nextTick} = Vue;
+
+        createApp({
+            setup() {
+                const isScrolled = ref(false);
+                const mobileMenuOpen = ref(false);
+                const navbarRef = ref(null);
+
+                const handleScroll = () => {
+                    isScrolled.value = window.scrollY > 60;
+                };
+
+                const scrollToSection = (id) => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const navHeight = isScrolled.value ? 64 : 72;
+                        const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+                        window.scrollTo({top, behavior: 'smooth'});
+                    }
+                };
+
+                const setupRevealObserver = () => {
+                    const observer = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add('visible');
+                                    observer.unobserve(entry.target);
+                                }
+                            });
+                        }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'}
+                    );
+                    document.querySelectorAll('.reveal').forEach((el) => {
+                        observer.observe(el);
+                    });
+                };
+
+                onMounted(() => {
+                    window.addEventListener('scroll', handleScroll, {passive: true});
+                    handleScroll();
+                    nextTick(() => {
+                        setupRevealObserver();
+                    });
+                });
+
+                onUnmounted(() => {
+                    window.removeEventListener('scroll', handleScroll);
+                });
+
+                return {
+                    isScrolled,
+                    mobileMenuOpen,
+                    navbarRef,
+                    scrollToSection,
+                };
+            },
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
